@@ -57,5 +57,11 @@ We can also run a shell command when an event has been received. For example, we
 ```
 ./pa_conn_watcher --run "echo 'Something happened!'" --silent --filter "bluez_sink.80_7B_3E_21_79_EC.a2dp_sink"
 
-./pa_conn_watcher --run "viper restart" --filter "bluez_sink.80_7B_3E_21_79_EC.a2dp_sink"
+./pa_conn_watcher --run "viper restart" --once --filter "bluez_sink.80_7B_3E_21_79_EC.a2dp_sink"
 ```
+
+**NOTE:** If you intend to use this program with Viper4Linux (`viper restart`), keep in mind that this causes an endless loop:
+```
+Watcher detects update -> restart viper -> restart causes sink update -> watcher detects update -> ...
+```
+To prevent this you can provide a `--once` flag and call the executable from a bash loop with `sleep 5` appended to the command.
