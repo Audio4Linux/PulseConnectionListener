@@ -65,3 +65,10 @@ We can also run a shell command when an event has been received. For example, we
 Watcher detects update -> restart viper -> restart causes sink update -> watcher detects update -> ...
 ```
 To prevent this you can provide a `--once` flag and call the executable from a bash loop with `sleep 5` appended to the command.
+
+## Debugging
+
+You can enable debug output using this environment variable:
+```
+export G_MESSAGES_DEBUG=all
+```
