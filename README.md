@@ -1,29 +1,28 @@
 # PulseConnectionListener
-Listen for sink changes in Pulseaudio
+Listen for sink changes on the default Pulseaudio server
 
 ## Build from sources
 
-Clone repository
+Clone repository:
 ```
 git clone https://github.com/Audio4Linux/PulseConnectionListener
 cd PulseConnectionListener
 ```
 
-Install dependencies (glibmm-2.4, giomm-2.4 and libpulse)
-
-On Arch:
-```
+Install dependencies (glibmm-2.4, giomm-2.4 and libpulse):
+```bash
+# Arch Linux
 sudo pacman -S glibmm pulseaudio
 ```
 
-Compile project
+Compile project:
 ```
 mkdir build && cd build
 cmake ..
 make
 ```
 
-Now you should be able to find the binary in the current directory:
+You should end up with a binary called `pa_conn_watcher`:
 ```
 ./pa_conn_watcher --help
 ```
@@ -43,20 +42,18 @@ Usage:
 
 ## Usage
 
-#### Example: Listen for audio sink changes of a specific output device
-
 First you need to find the name of the sink you want to watch:
 ```
 pactl list sinks | grep "Name:" -A1
 ```
-I'll use my Bluetooth earbuds (`bluez_sink.80_7B_3E_21_79_EC.a2dp_sink`) for the following examples.
+I'll use my Bluetooth earbuds (`bluez_sink.80_7B_3E_21_79_EC.a2dp_sink`) for the following examples. (You can also leave this filter out if you want to receive events from all sinks.)
 
 Launch the `pa_conn_watcher` executable with the corresponding parameters: 
 ```
 ./pa_conn_watcher --filter "bluez_sink.80_7B_3E_21_79_EC.a2dp_sink"
 ```
 
-We can also run a shell command when an event has been received. For example we can print something to stdout or run external scripts:
+We can also run a shell command when an event has been received. For example, we can print something to stdout or run external scripts:
 ```
 ./pa_conn_watcher --run "echo 'Something happened!'" --silent --filter "bluez_sink.80_7B_3E_21_79_EC.a2dp_sink"
 
